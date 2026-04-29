@@ -1,0 +1,14 @@
+# Environnement — NE JAMAIS committer
+.env
+.env.local
+.env.*.local
+
+# Dépendances
+node_modules/
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db

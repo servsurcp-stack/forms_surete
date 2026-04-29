@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SÛRETÉ - VÉRIFICATION DE CONCORDANCE DE CHARGEMENT 2026</title>
+  <style>
+    /* ── Variables & Reset ─────────────────────────────── */
+    :root {
+      --brand:        #185498;
+      --brand-dark:   #14467f;
+      --brand-teal:   #03787c;
+      --bg:           #f0f4f8;
+      --card:         #ffffff;
+      --border:       #d1d9e6;
+      --text:         #1e2a3a;
+      --text-muted:   #5a6a7e;
+      --required:     #c0392b;
+      --section-bg:   #e8f0fb;
+      --radio-active: #185498;
+      --check-active: #185498;
+      --shadow:       0 2px 12px rgba(24,84,152,.10);
+      --radius:       10px;
+      --transition:   .18s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── Header ───────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-teal) 100%);
+      color: #fff;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    }
+    .header svg { flex-shrink: 0; }
+
+    /* ── Form wrapper ─────────────────────────────────── */
+    .form-wrapper {
+      max-width: 720px;
+      margin: 32px auto 0;
+      padding: 0 16px;
+    }
+
+    /* ── Form title card ──────────────────────────────── */
+    .form-title-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border-top: 6px solid var(--brand);
+      padding: 28px 32px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .form-title-card h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .form-title-card .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .required-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .required-note span { color: var(--required); font-weight: 700; }
+
+    .name-notice {
+      background: #fff8e1;
+      border-left: 4px solid #f5a623;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #7a5200;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .name-input {
+      margin-top: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      color: var(--text);
+    }
+    .name-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(24,84,152,.15);
+    }
+
+    /* ── Section header ───────────────────────────────── */
+    .section-header {
+      background: var(--section-bg);
+      border-radius: var(--radius);
+      padding: 16px 20px 14px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--brand);
+      box-shadow: var(--shadow);
+    }
+    .section-header .section-num {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--brand-teal);
+      margin-bottom: 2px;
+    }
+    .section-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    /* ── Question card ────────────────────────────────── */
+    .question-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: border-color var(--transition);
+    }
+    .question-card:focus-within {
+      border-color: var(--brand);
+    }
+
+    .question-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .q-num {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      min-width: 24px;
+      flex-shrink: 0;
+    }
+    .required-star {
+      color: var(--required);
+      font-weight: 700;
+      margin-left: 2px;
+    }
+    .q-type-badge {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 4px;
+      font-style: italic;
+    }
+
+    /* ── Text inputs ──────────────────────────────────── */
+    .text-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      background: var(--bg);
+    }
+    .text-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(24,84,152,.12);
+      background: #fff;
+    }
+    .text-input::placeholder { color: #a0aec0; }
+
+    /* ── Date input ───────────────────────────────────── */
+    .date-input {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      background: var(--bg);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .date-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(24,84,152,.12);
+      background: #fff;
+    }
+
+    /* ── Radio choices ────────────────────────────────── */
+    .choices { display: flex; flex-direction: column; gap: 8px; }
+
+    .choice-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+      user-select: none;
+    }
+    .choice-item:hover { background: #f0f4fb; border-color: var(--brand); }
+
+    .choice-item input[type="radio"],
+    .choice-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--radio-active);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .choice-item label {
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .choice-item:has(input:checked) {
+      background: #e8f0fb;
+      border-color: var(--brand);
+    }
+    .choice-item:has(input:checked) label { font-weight: 600; color: var(--brand); }
+
+    /* ── Select dropdown ──────────────────────────────── */
+    .select-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%235a6a7e' d='m7 10 5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .select-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(24,84,152,.12);
+      background-color: #fff;
+    }
+
+    /* ── Submit button ────────────────────────────────── */
+    .submit-area {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-teal) 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(24,84,152,.25);
+      transition: opacity var(--transition), transform var(--transition);
+      letter-spacing: .02em;
+    }
+    .btn-submit:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-reset {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .btn-reset:hover { background: var(--bg); color: var(--text); }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .form-footer {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 12px;
+      color: #a0aec0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 560px) {
+      .form-title-card { padding: 20px 18px 18px; }
+      .question-card    { padding: 16px 16px; }
+      .form-title-card h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────── -->
+<header class="header">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="white" stroke-width="1.6" fill="none"/>
+    <path d="M14 2v4h4" stroke="white" stroke-width="1.6"/>
+    <line x1="8" y1="10" x2="16" y2="10" stroke="white" stroke-width="1.4"/>
+    <line x1="8" y1="13" x2="16" y2="13" stroke="white" stroke-width="1.4"/>
+    <line x1="8" y1="16" x2="12" y2="16" stroke="white" stroke-width="1.4"/>
+  </svg>
+  Service Sûreté — Formulaire de vérification
+</header>
+
+<!-- ── FORM ───────────────────────────────────────────── -->
+<main class="form-wrapper">
+
+  <!-- Titre du formulaire -->
+  <div class="form-title-card">
+    <h1>SÛRETÉ – VÉRIFICATION DE CONCORDANCE DE CHARGEMENT 2026</h1>
+    <p class="subtitle">Service Sûreté</p>
+    <p class="required-note"><span>*</span> Champs obligatoires</p>
+    <div class="name-notice">
+      ⚠️ Ce formulaire enregistrera votre nom, veuillez le renseigner ci-dessous.
+    </div>
+    <input type="text" class="name-input" placeholder="Votre nom et prénom" aria-label="Votre nom">
+  </div>
+
+  <form id="mainForm" novalidate>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  SECTION 1 — GÉNÉRALITÉS                         -->
+    <!-- ════════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-num">Section 1</div>
+      <h2>GÉNÉRALITÉS</h2>
+    </div>
+
+    <!-- Q1 — Date -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">1.</span>
+        Date <span class="required-star">*</span>
+      </div>
+      <input type="date" class="date-input" id="q1" required aria-label="Date">
+    </div>
+
+    <!-- Q2 — Nom de la personne en charge -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">2.</span>
+        Nom de la personne en charge de la vérification <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Nom de la personne en charge">
+        <label class="choice-item"><input type="radio" name="q2" value="Eric VEAUTE" required><label>Eric VEAUTE</label></label>
+        <label class="choice-item"><input type="radio" name="q2" value="Jean-Christophe REPIQUET"><label>Jean-Christophe REPIQUET</label></label>
+        <label class="choice-item"><input type="radio" name="q2" value="Jonathan CANU"><label>Jonathan CANU</label></label>
+        <label class="choice-item"><input type="radio" name="q2" value="Christophe BISSON"><label>Christophe BISSON</label></label>
+        <label class="choice-item"><input type="radio" name="q2" value="Line VINAY"><label>Line VINAY</label></label>
+      </div>
+    </div>
+
+    <!-- Q3 — Lieu de la vérification -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">3.</span>
+        Lieu de la vérification <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Lieu de la vérification">
+        <label class="choice-item"><input type="radio" name="q3" value="Agence/Antenne" required><label>Agence / Antenne</label></label>
+        <label class="choice-item"><input type="radio" name="q3" value="Délocalisé"><label>Délocalisé</label></label>
+      </div>
+    </div>
+
+    <!-- Q4 — Appartenance du conducteur -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">4.</span>
+        Appartenance du conducteur <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Appartenance du conducteur">
+        <label class="choice-item"><input type="radio" name="q4" value="DSP" required><label>DSP</label></label>
+        <label class="choice-item"><input type="radio" name="q4" value="COLIS PRIVE"><label>COLIS PRIVÉ</label></label>
+      </div>
+    </div>
+
+    <!-- Q5 — Numéro de tournée -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">5.</span>
+        NUMÉRO DE TOURNÉE <span class="required-star">*</span>
+      </div>
+      <input type="text" class="text-input" id="q5" placeholder="Entrez votre réponse" required aria-label="Numéro de tournée">
+    </div>
+
+    <!-- Q6 — Lettre de PDA -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">6.</span>
+        LETTRE DE PDA <span class="required-star">*</span>
+      </div>
+      <input type="text" class="text-input" id="q6" placeholder="Entrez votre réponse" required aria-label="Lettre de PDA">
+    </div>
+
+    <!-- Q7 — Immatriculation -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">7.</span>
+        Immatriculation <span class="required-star">*</span>
+      </div>
+      <input type="text" class="text-input" id="q7" placeholder="Entrez votre réponse" required aria-label="Immatriculation">
+    </div>
+
+    <!-- Q8 — Type de vérification -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">8.</span>
+        Type de vérification <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Type de vérification">
+        <label class="choice-item"><input type="radio" name="q8" value="Avant chargement" required><label>Avant chargement</label></label>
+        <label class="choice-item"><input type="radio" name="q8" value="Après chargement"><label>Après chargement</label></label>
+        <label class="choice-item"><input type="radio" name="q8" value="Suivi de tournée"><label>Suivi de tournée</label></label>
+      </div>
+    </div>
+
+    <!-- Q9 — Région -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">9.</span>
+        RÉGION <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Région">
+        <label class="choice-item"><input type="radio" name="q9" value="REGION NORD EST" required><label>RÉGION NORD EST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="REGION SUD EST"><label>RÉGION SUD EST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="REGION SUD OUEST"><label>RÉGION SUD OUEST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="REGION NORD OUEST"><label>RÉGION NORD OUEST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="REGION IDF"><label>RÉGION IDF</label></label>
+      </div>
+    </div>
+
+    <!-- Q10 — Agences / Antennes Région Sud Est -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">10.</span>
+        AGENCES / ANTENNES — RÉGION SUD EST
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <select class="select-input" id="q10" aria-label="Agences / Antennes Région Sud Est">
+        <option value="">Sélectionnez votre réponse</option>
+        <option>Marseille</option>
+        <option>Nice</option>
+        <option>Lyon</option>
+        <option>Montpellier</option>
+        <option>Toulon</option>
+        <option>Grenoble</option>
+      </select>
+    </div>
+
+    <!-- Q11 — Agences / Antennes Région Nord Est -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">11.</span>
+        AGENCES / ANTENNES — RÉGION NORD EST
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <select class="select-input" id="q11" aria-label="Agences / Antennes Région Nord Est">
+        <option value="">Sélectionnez votre réponse</option>
+        <option>Strasbourg</option>
+        <option>Nancy</option>
+        <option>Reims</option>
+        <option>Metz</option>
+        <option>Dijon</option>
+      </select>
+    </div>
+
+    <!-- Q12 — Agences / Antennes Région Nord Ouest -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">12.</span>
+        AGENCES / ANTENNES — RÉGION NORD OUEST
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <select class="select-input" id="q12" aria-label="Agences / Antennes Région Nord Ouest">
+        <option value="">Sélectionnez votre réponse</option>
+        <option>Rennes</option>
+        <option>Nantes</option>
+        <option>Le Mans</option>
+        <option>Caen</option>
+        <option>Rouen</option>
+      </select>
+    </div>
+
+    <!-- Q13 — Agences / Antennes Région Sud Ouest -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">13.</span>
+        AGENCES / ANTENNES — RÉGION SUD OUEST
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <select class="select-input" id="q13" aria-label="Agences / Antennes Région Sud Ouest">
+        <option value="">Sélectionnez votre réponse</option>
+        <option>Bordeaux</option>
+        <option>Toulouse</option>
+        <option>Pau</option>
+        <option>Bayonne</option>
+        <option>Clermont-Ferrand</option>
+      </select>
+    </div>
+
+    <!-- Q14 — Agences / Antennes Région IDF -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">14.</span>
+        AGENCES / ANTENNES — RÉGION IDF
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <select class="select-input" id="q14" aria-label="Agences / Antennes Région IDF">
+        <option value="">Sélectionnez votre réponse</option>
+        <option>Paris Nord</option>
+        <option>Paris Sud</option>
+        <option>Paris Est</option>
+        <option>Paris Ouest</option>
+        <option>Île-de-France Centre</option>
+      </select>
+    </div>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  SECTION 2 — ANOMALIES                           -->
+    <!-- ════════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-num">Section 2</div>
+      <h2>ANOMALIES</h2>
+    </div>
+
+    <!-- Q15 — Anomalie ? -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">15.</span>
+        ANOMALIE <span class="required-star">*</span>
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Anomalie">
+        <label class="choice-item"><input type="radio" name="q15" value="Oui" required><label>Oui</label></label>
+        <label class="choice-item"><input type="radio" name="q15" value="Non"><label>Non</label></label>
+      </div>
+    </div>
+
+    <!-- Q16 — Anomalie de chargement -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">16.</span>
+        ANOMALIE DE CHARGEMENT
+        <span class="q-type-badge">(choix multiples)</span>
+      </div>
+      <div class="choices" role="group" aria-label="Anomalie de chargement">
+        <label class="choice-item"><input type="checkbox" name="q16" value="Colis en cabine"><label>Colis en cabine</label></label>
+        <label class="choice-item"><input type="checkbox" name="q16" value="Colis non scanné (prévu pour ce chauffeur-livreur)"><label>Colis non scanné (prévu pour ce chauffeur-livreur)</label></label>
+        <label class="choice-item"><input type="checkbox" name="q16" value="Colis non prévu pour ce chauffeur-livreur"><label>Colis non prévu pour ce chauffeur-livreur</label></label>
+        <label class="choice-item"><input type="checkbox" name="q16" value="Adhésif Colis Privé dans le véhicule"><label>Adhésif Colis Privé dans le véhicule</label></label>
+        <label class="choice-item"><input type="checkbox" name="q16" value="Autre"><label>Autre</label></label>
+      </div>
+    </div>
+
+    <!-- Q17 — Commentaires colis -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">17.</span>
+        Commentaires (N° de colis…)
+      </div>
+      <input type="text" class="text-input" id="q17" placeholder="Entrez votre réponse" aria-label="Commentaires colis">
+    </div>
+
+    <!-- Q18 — Anomalie de véhicule -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">18.</span>
+        ANOMALIE DE VÉHICULE
+        <span class="q-type-badge">(choix multiples)</span>
+      </div>
+      <div class="choices" role="group" aria-label="Anomalie de véhicule">
+        <label class="choice-item"><input type="checkbox" name="q18" value="Défaut de verrouillage"><label>Défaut de verrouillage</label></label>
+        <label class="choice-item"><input type="checkbox" name="q18" value="Passager non autorisé"><label>Passager non autorisé</label></label>
+        <label class="choice-item"><input type="checkbox" name="q18" value="Clef laissée sur le contact"><label>Clef laissée sur le contact</label></label>
+        <label class="choice-item"><input type="checkbox" name="q18" value="Manque séparation cabine/caisse"><label>Manque séparation cabine / caisse</label></label>
+        <label class="choice-item"><input type="checkbox" name="q18" value="Véhicule vitré"><label>Véhicule vitré</label></label>
+        <label class="choice-item"><input type="checkbox" name="q18" value="État général"><label>État général</label></label>
+      </div>
+    </div>
+
+    <!-- Q19 — Commentaires véhicule -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">19.</span>
+        Commentaires
+      </div>
+      <input type="text" class="text-input" id="q19" placeholder="Entrez votre réponse" aria-label="Commentaires véhicule">
+    </div>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  SECTION 3 — ACTIONS PRISES                      -->
+    <!-- ════════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-num">Section 3</div>
+      <h2>ACTIONS PRISES</h2>
+    </div>
+
+    <!-- Q20 — Chauffeur sorti des effectifs ? -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">20.</span>
+        Chauffeur sorti des effectifs ?
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Chauffeur sorti des effectifs">
+        <label class="choice-item"><input type="radio" name="q20" value="OUI"><label>OUI</label></label>
+        <label class="choice-item"><input type="radio" name="q20" value="NON"><label>NON</label></label>
+      </div>
+    </div>
+
+    <!-- Q21 — Sanction RH ? -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">21.</span>
+        Sanction RH ?
+        <span class="q-type-badge">(choix unique)</span>
+      </div>
+      <div class="choices" role="radiogroup" aria-label="Sanction RH">
+        <label class="choice-item"><input type="radio" name="q21" value="OUI"><label>OUI</label></label>
+        <label class="choice-item"><input type="radio" name="q21" value="NON"><label>NON</label></label>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  SECTION 4 — SUIVI DE TOURNÉE                    -->
+    <!-- ════════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-num">Section 4</div>
+      <h2>SUIVI DE TOURNÉE</h2>
+    </div>
+
+    <!-- Q22 — Anomalie suivi de tournée -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">22.</span>
+        ANOMALIE SUIVI DE TOURNÉE
+        <span class="q-type-badge">(choix multiples)</span>
+      </div>
+      <div class="choices" role="group" aria-label="Anomalie suivi de tournée">
+        <label class="choice-item"><input type="checkbox" name="q22" value="Défaut de verrouillage"><label>Défaut de verrouillage</label></label>
+        <label class="choice-item"><input type="checkbox" name="q22" value="Moteur tournant ou clef sur le contact"><label>Moteur tournant ou clef sur le contact</label></label>
+        <label class="choice-item"><input type="checkbox" name="q22" value="PDA laissé dans le véhicule"><label>PDA laissé dans le véhicule</label></label>
+        <label class="choice-item"><input type="checkbox" name="q22" value="Colis en cabine"><label>Colis en cabine</label></label>
+        <label class="choice-item"><input type="checkbox" name="q22" value="Colis non autorisé"><label>Colis non autorisé</label></label>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  SECTION 5 — FIN                                 -->
+    <!-- ════════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-num">Section 5</div>
+      <h2>FIN</h2>
+    </div>
+
+    <!-- Q23 — Actions prises et commentaires divers -->
+    <div class="question-card">
+      <div class="question-label">
+        <span class="q-num">23.</span>
+        Actions prises et commentaires divers
+      </div>
+      <input type="text" class="text-input" id="q23" placeholder="Entrez votre réponse" aria-label="Actions prises et commentaires divers">
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-area">
+      <button type="submit" class="btn-submit">Envoyer</button>
+      <button type="reset"  class="btn-reset">Effacer les réponses</button>
+    </div>
+
+  </form>
+
+  <div class="form-footer">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" stroke="#a0aec0" stroke-width="1.5" fill="none"/></svg>
+    Ce formulaire est à usage interne — Service Sûreté
+  </div>
+
+</main>
+
+<script>
+  // ══════════════════════════════════════════════════════
+  //  ⚙️  Endpoint du proxy serverless (pas de credentials ici)
+  //  En dev local : http://localhost:3000/api/submit
+  //  En prod      : /api/submit  (relatif, même domaine Vercel)
+  // ══════════════════════════════════════════════════════
+  const API_ENDPOINT = '/api/submit';
+
+  // ══════════════════════════════════════════════════════
+  //  Highlight des items sélectionnés (radio + checkbox)
+  // ══════════════════════════════════════════════════════
+  document.addEventListener('change', e => {
+    const input = e.target;
+    if (input.type === 'radio') {
+      document.querySelectorAll(`input[name="${input.name}"]`)
+        .forEach(r => r.closest('.choice-item').classList.remove('selected'));
+    }
+    input.closest('.choice-item').classList.toggle('selected', input.checked);
+  });
+
+  // ══════════════════════════════════════════════════════
+  //  Collecte des données du formulaire → objet JSON
+  // ══════════════════════════════════════════════════════
+  function collectFormData() {
+    const nom = document.querySelector('.name-input')?.value?.trim() || null;
+
+    // Helpers
+    const val  = id  => document.getElementById(id)?.value?.trim() || null;
+    const radio = name => document.querySelector(`input[name="${name}"]:checked`)?.value || null;
+    const checks = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+                            .map(cb => cb.value).join(', ') || null;
+
+    // Horodatage automatique
+    const now = new Date().toISOString();
+
+    return {
+      // Méta
+      heure_de_debut             : now,                    // rempli à l'ouverture si besoin
+      heure_de_fin               : now,                    // rempli à la soumission
+      date                       : val('q1') || now.split('T')[0],
+      nom_verificateur           : nom,
+
+      // Section 1 — Généralités
+      nom_de_la_personne_en_charge: radio('q2'),
+      lieu_de_la_verification    : radio('q3'),
+      appartenance_du_conducteur : radio('q4'),
+      tournee                    : val('q5'),
+      pda                        : val('q6'),
+      immatriculation            : val('q7'),
+      type_de_verification       : radio('q8'),
+      region                     : radio('q9'),
+      agences_antennes           : val('q10') || val('q11') || val('q12') || val('q13') || val('q14'),
+
+      // Section 2 — Anomalies
+      anomalie                   : radio('q15'),
+      anomalie_de_chargement     : checks('q16'),
+      commentaires_chargement    : val('q17'),
+      anomalie_de_vehicule       : checks('q18'),
+      commentaires_vehicule      : val('q19'),
+
+      // Section 3 — Actions prises
+      chauffeur_sorti_effectifs  : radio('q20'),
+      sanction_rh                : radio('q21'),
+
+      // Section 4 — Suivi de tournée
+      anomalie_suivi_de_tournee  : checks('q22'),
+
+      // Section 5 — Fin
+      actions_commentaires_divers: val('q23'),
+    };
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  Validation basique des champs obligatoires
+  // ══════════════════════════════════════════════════════
+  function validate(payload) {
+    const required = {
+      date                        : 'Date (Q1)',
+      nom_de_la_personne_en_charge: 'Nom du vérificateur (Q2)',
+      lieu_de_la_verification     : 'Lieu de la vérification (Q3)',
+      appartenance_du_conducteur  : 'Appartenance du conducteur (Q4)',
+      tournee                     : 'Numéro de tournée (Q5)',
+      pda                         : 'Lettre de PDA (Q6)',
+      immatriculation             : 'Immatriculation (Q7)',
+      type_de_verification        : 'Type de vérification (Q8)',
+      region                      : 'Région (Q9)',
+      anomalie                    : 'Anomalie (Q15)',
+    };
+    const missing = Object.entries(required)
+      .filter(([key]) => !payload[key])
+      .map(([, label]) => label);
+    return missing;
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  UI — états du bouton et toast de confirmation
+  // ══════════════════════════════════════════════════════
+  function setSubmitState(state) {
+    const btn = document.querySelector('.btn-submit');
+    const states = {
+      idle    : { text: 'Envoyer',      disabled: false, cls: '' },
+      loading : { text: '⏳ Envoi…',    disabled: true,  cls: 'loading' },
+      success : { text: '✅ Envoyé !',  disabled: true,  cls: 'success' },
+      error   : { text: '❌ Erreur',    disabled: false,  cls: 'error'   },
+    };
+    const s = states[state];
+    btn.textContent = s.text;
+    btn.disabled    = s.disabled;
+    btn.className   = 'btn-submit ' + s.cls;
+    if (state === 'success') setTimeout(() => setSubmitState('idle'), 3500);
+    if (state === 'error')   setTimeout(() => setSubmitState('idle'), 3500);
+  }
+
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 4000);
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  Envoi vers le proxy Vercel (credentials côté serveur)
+  // ══════════════════════════════════════════════════════
+  async function sendToAPI(payload) {
+    const res = await fetch(API_ENDPOINT, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: res.statusText }));
+      throw new Error(err.error ?? `Erreur ${res.status}`);
+    }
+
+    return res.json();
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  Handler principal
+  // ══════════════════════════════════════════════════════
+  document.getElementById('mainForm').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const payload = collectFormData();
+
+    // Validation
+    const missing = validate(payload);
+    if (missing.length > 0) {
+      showToast(`Champs obligatoires manquants :\n• ${missing.join('\n• ')}`, 'error');
+      return;
+    }
+
+    setSubmitState('loading');
+
+    try {
+      await sendToAPI(payload);
+      setSubmitState('success');
+      showToast('Vérification enregistrée avec succès dans Supabase ✅');
+      document.getElementById('mainForm').reset();
+      document.querySelector('.name-input').value = '';
+      document.querySelectorAll('.choice-item').forEach(el => el.classList.remove('selected'));
+    } catch (err) {
+      console.error(err);
+      setSubmitState('error');
+      showToast(`Erreur lors de l'envoi : ${err.message}`, 'error');
+    }
+  });
+</script>
+
+<style>
+  /* ── États du bouton submit ───────────────────────── */
+  .btn-submit.loading { opacity: .7; cursor: not-allowed; }
+  .btn-submit.success { background: linear-gradient(135deg,#27ae60,#1e8449); }
+  .btn-submit.error   { background: linear-gradient(135deg,#c0392b,#922b21); }
+
+  /* ── Toast notifications ──────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1e2a3a;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    white-space: pre-line;
+    max-width: 420px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .3s, transform .3s;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.toast-success { border-left: 4px solid #27ae60; }
+  .toast.toast-error   { border-left: 4px solid #c0392b; }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "surete-verification-form",
+  "version": "1.0.0",
+  "description": "Formulaire de vérification de concordance de chargement — Service Sûreté",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}
