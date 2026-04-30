@@ -87,34 +87,6 @@
     }
     .required-note span { color: var(--required); font-weight: 700; }
 
-    .name-notice {
-      background: #fff8e1;
-      border-left: 4px solid #f5a623;
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: #7a5200;
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .name-input {
-      margin-top: 8px;
-      width: 100%;
-      padding: 9px 12px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      color: var(--text);
-    }
-    .name-input:focus {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 3px rgba(24,84,152,.15);
-    }
 
     /* ── Section header ───────────────────────────────── */
     .section-header {
@@ -332,13 +304,136 @@
       gap: 6px;
     }
 
-    /* ── Responsive ───────────────────────────────────── */
-    @media (max-width: 560px) {
-      .form-title-card { padding: 20px 18px 18px; }
-      .question-card    { padding: 16px 16px; }
-      .form-title-card h1 { font-size: 18px; }
+    /* ── Responsive mobile — renforcé ───────────────── */
+
+    /* Smooth scroll global */
+    html { scroll-behavior: smooth; }
+
+    /* Date input : pleine largeur partout */
+    .date-input { width: 100%; }
+
+    @media (max-width: 640px) {
+      body {
+        padding-bottom: calc(80px + env(safe-area-inset-bottom));
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Header sticky compact */
+      .header {
+        height: 52px;
+        font-size: 12.5px;
+        padding: 0 14px;
+        gap: 8px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .header svg { width: 18px; height: 18px; }
+
+      /* Wrapper */
+      .form-wrapper {
+        margin-top: 14px;
+        padding: 0 10px;
+      }
+
+      /* Titre compact */
+      .form-title-card {
+        padding: 16px 14px 14px;
+        border-top-width: 4px;
+        margin-bottom: 14px;
+      }
+      .form-title-card h1 { font-size: 15px; line-height: 1.4; }
+      .form-title-card .subtitle { font-size: 12px; }
+      .required-note { font-size: 12px; }
+
+      /* Section header */
+      .section-header {
+        padding: 11px 14px 9px;
+        margin-bottom: 8px;
+        border-left-width: 4px;
+      }
+      .section-header .section-num { font-size: 10px; }
+      .section-header h2 { font-size: 13px; }
+
+      /* Cards */
+      .question-card {
+        padding: 14px 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+      }
+
+      /* Labels */
+      .question-label {
+        font-size: 13px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 3px;
+        line-height: 1.5;
+      }
+      .q-num { min-width: 20px; font-size: 11px; }
+      .q-type-badge { font-size: 10px; }
+
+      /* Zones de tap agrandies */
+      .choice-item {
+        padding: 13px 12px;
+        gap: 12px;
+        border-radius: 8px;
+        min-height: 52px;
+        align-items: center;
+      }
+      .choice-item input[type="radio"],
+      .choice-item input[type="checkbox"] {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+      }
+      .choice-item label { font-size: 14px; line-height: 1.35; }
+
+      /* font-size 16px = pas de zoom auto iOS au focus */
+      .text-input,
+      .select-input,
+      .date-input {
+        font-size: 16px;
+        padding: 13px 14px;
+        min-height: 50px;
+        border-radius: 8px;
+      }
+      .select-input { padding-right: 42px; }
+
+      /* Barre sticky en bas */
+      .submit-area {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+        margin-top: 20px;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 50;
+      }
+      .btn-submit,
+      .btn-reset {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+        text-align: center;
+      }
+      .btn-submit { box-shadow: 0 4px 14px rgba(24,84,152,.3); }
+      .form-footer { font-size: 11px; margin-top: 16px; }
     }
+
+    /* Tablette 641px–900px */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .form-wrapper { padding: 0 20px; }
+      .form-title-card { padding: 22px 24px 20px; }
+      .question-card { padding: 18px 20px; }
+      .choice-item { min-height: 48px; }
+    }
+
   </style>
+</head>
 </head>
 <body>
 
@@ -362,10 +457,6 @@
     <h1>SÛRETÉ – VÉRIFICATION DE CONCORDANCE DE CHARGEMENT 2026</h1>
     <p class="subtitle">Service Sûreté</p>
     <p class="required-note"><span>*</span> Champs obligatoires</p>
-    <div class="name-notice">
-      ⚠️ Ce formulaire enregistrera votre nom, veuillez le renseigner ci-dessous.
-    </div>
-    <input type="text" class="name-input" placeholder="Votre nom et prénom" aria-label="Votre nom">
   </div>
 
   <form id="mainForm" novalidate>
@@ -605,17 +696,13 @@
       </div>
     </div>
 
-    <!-- Q21 — Sanction RH ? -->
+    <!-- Q21 — Commentaire -->
     <div class="question-card">
       <div class="question-label">
         <span class="q-num">21.</span>
-        Sanction RH ?
-        <span class="q-type-badge">(choix unique)</span>
+        Commentaire
       </div>
-      <div class="choices" role="radiogroup" aria-label="Sanction RH">
-        <label class="choice-item"><input type="radio" name="q21" value="OUI"><label>OUI</label></label>
-        <label class="choice-item"><input type="radio" name="q21" value="NON"><label>NON</label></label>
-      </div>
+      <input type="text" class="text-input" id="q21" placeholder="Entrez votre commentaire" aria-label="Commentaire">
     </div>
 
     <!-- ════════════════════════════════════════════════ -->
@@ -645,7 +732,7 @@
     <!-- ════════════════════════════════════════════════ -->
     <!--  SECTION 5 — FIN                                 -->
     <!-- ════════════════════════════════════════════════ -->
-    <div class="section-header">
+    <div class="section-header" id="section-fin">
       <div class="section-num">Section 5</div>
       <h2>FIN</h2>
     </div>
@@ -805,14 +892,14 @@
     if (e.target.name === 'q9') populateAgences(e.target.value);
   });
 
-  // ── Scroll vers Section 3 quand anomalie = "Non" ──────
+  // ── Scroll vers Section 5 quand anomalie = "Non" ───────
   document.addEventListener('change', e => {
     if (e.target.name === 'q15' && e.target.value === 'Non') {
-      const section3 = document.getElementById('section-actions');
-      if (section3) {
+      const section5 = document.getElementById('section-fin');
+      if (section5) {
         setTimeout(() => {
-          section3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 150); // léger délai pour que l'UI se mette à jour d'abord
+          section5.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
       }
     }
   });
@@ -833,7 +920,6 @@
   //  Collecte des données du formulaire → objet JSON
   // ══════════════════════════════════════════════════════
   function collectFormData() {
-    const nom = document.querySelector('.name-input')?.value?.trim() || null;
 
     // Helpers
     const val  = id  => document.getElementById(id)?.value?.trim() || null;
@@ -849,8 +935,6 @@
       heure_de_debut             : now,                    // rempli à l'ouverture si besoin
       heure_de_fin               : now,                    // rempli à la soumission
       date                       : val('q1') || now.split('T')[0],
-      nom_verificateur           : nom,
-
       // Section 1 — Généralités
       nom_de_la_personne_en_charge: radio('q2'),
       lieu_de_la_verification    : radio('q3'),
@@ -875,7 +959,7 @@
 
       // Section 3 — Actions prises
       chauffeur_sorti_effectifs  : radio('q20'),
-      sanction_rh                : radio('q21'),
+      commentaire_actions         : val('q21'),
 
       // Section 4 — Suivi de tournée
       anomalie_suivi_de_tournee  : checks('q22'),
@@ -977,7 +1061,7 @@
       setSubmitState('success');
       showToast('Vérification enregistrée avec succès dans Supabase ✅');
       document.getElementById('mainForm').reset();
-      document.querySelector('.name-input').value = '';
+
       document.querySelectorAll('.choice-item').forEach(el => el.classList.remove('selected'));
     } catch (err) {
       console.error(err);

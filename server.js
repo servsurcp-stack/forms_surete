@@ -51,6 +51,7 @@ const ALLOWED_FIELDS = new Set([
   'anomalie_de_vehicule', 'commentaires_vehicule',
   'chauffeur_sorti_effectifs', 'sanction_rh',
   'anomalie_suivi_de_tournee', 'actions_commentaires_divers',
+  'commentaire_actions',
   'is_surete',
 ]);
 
