@@ -177,6 +177,8 @@
 
     /* ── Date input ───────────────────────────────────── */
     .date-input {
+      width: 100%;          /* pleine largeur sur mobile */
+      max-width: 260px;     /* raisonnable sur desktop  */
       padding: 10px 12px;
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -186,6 +188,7 @@
       outline: none;
       background: var(--bg);
       transition: border-color var(--transition), box-shadow var(--transition);
+      box-sizing: border-box;
     }
     .date-input:focus {
       border-color: var(--brand);
