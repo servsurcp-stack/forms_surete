@@ -451,9 +451,9 @@
     <div class="question-card">
       <div class="question-label">
         <span class="q-num">7.</span>
-        Immatriculation <span class="required-star">*</span>
+        Immatriculation <span class="q-type-badge">(optionnel)</span>
       </div>
-      <input type="text" class="text-input" id="q7" placeholder="Entrez votre réponse" required aria-label="Immatriculation">
+      <input type="text" class="text-input" id="q7" placeholder="Entrez votre réponse" aria-label="Immatriculation">
     </div>
 
     <!-- Q8 — Type de vérification -->
@@ -477,99 +477,39 @@
         RÉGION <span class="required-star">*</span>
         <span class="q-type-badge">(choix unique)</span>
       </div>
-      <div class="choices" role="radiogroup" aria-label="Région">
-        <label class="choice-item"><input type="radio" name="q9" value="REGION NORD EST" required><label>RÉGION NORD EST</label></label>
-        <label class="choice-item"><input type="radio" name="q9" value="REGION SUD EST"><label>RÉGION SUD EST</label></label>
-        <label class="choice-item"><input type="radio" name="q9" value="REGION SUD OUEST"><label>RÉGION SUD OUEST</label></label>
-        <label class="choice-item"><input type="radio" name="q9" value="REGION NORD OUEST"><label>RÉGION NORD OUEST</label></label>
-        <label class="choice-item"><input type="radio" name="q9" value="REGION IDF"><label>RÉGION IDF</label></label>
+      <div class="choices" role="radiogroup" aria-label="Région" id="region-group">
+        <label class="choice-item"><input type="radio" name="q9" value="NORD EST"  required><label>RÉGION NORD EST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="SUD EST"          ><label>RÉGION SUD EST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="SUD OUEST"        ><label>RÉGION SUD OUEST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="NORD OUEST"       ><label>RÉGION NORD OUEST</label></label>
+        <label class="choice-item"><input type="radio" name="q9" value="IDF"              ><label>RÉGION IDF</label></label>
       </div>
     </div>
 
-    <!-- Q10 — Agences / Antennes Région Sud Est -->
-    <div class="question-card">
+    <!-- Q10 — Agences / Antennes (dynamique selon région) -->
+    <div class="question-card" id="agences-card" style="display:none">
       <div class="question-label">
         <span class="q-num">10.</span>
-        AGENCES / ANTENNES — RÉGION SUD EST
+        AGENCE / ANTENNE <span class="required-star">*</span>
         <span class="q-type-badge">(choix unique)</span>
       </div>
-      <select class="select-input" id="q10" aria-label="Agences / Antennes Région Sud Est">
-        <option value="">Sélectionnez votre réponse</option>
-        <option>Marseille</option>
-        <option>Nice</option>
-        <option>Lyon</option>
-        <option>Montpellier</option>
-        <option>Toulon</option>
-        <option>Grenoble</option>
-      </select>
-    </div>
 
-    <!-- Q11 — Agences / Antennes Région Nord Est -->
-    <div class="question-card">
-      <div class="question-label">
-        <span class="q-num">11.</span>
-        AGENCES / ANTENNES — RÉGION NORD EST
-        <span class="q-type-badge">(choix unique)</span>
-      </div>
-      <select class="select-input" id="q11" aria-label="Agences / Antennes Région Nord Est">
-        <option value="">Sélectionnez votre réponse</option>
-        <option>Strasbourg</option>
-        <option>Nancy</option>
-        <option>Reims</option>
-        <option>Metz</option>
-        <option>Dijon</option>
-      </select>
-    </div>
+      <!-- Sous-label région sélectionnée -->
+      <div id="agences-region-label" style="font-size:12px;color:var(--brand-teal);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;"></div>
 
-    <!-- Q12 — Agences / Antennes Région Nord Ouest -->
-    <div class="question-card">
-      <div class="question-label">
-        <span class="q-num">12.</span>
-        AGENCES / ANTENNES — RÉGION NORD OUEST
-        <span class="q-type-badge">(choix unique)</span>
-      </div>
-      <select class="select-input" id="q12" aria-label="Agences / Antennes Région Nord Ouest">
-        <option value="">Sélectionnez votre réponse</option>
-        <option>Rennes</option>
-        <option>Nantes</option>
-        <option>Le Mans</option>
-        <option>Caen</option>
-        <option>Rouen</option>
+      <!-- CE de la région -->
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Agences</div>
+      <select class="select-input" id="q10-ce" aria-label="Agence CE" style="margin-bottom:14px">
+        <option value="">— Sélectionnez une agence —</option>
       </select>
-    </div>
 
-    <!-- Q13 — Agences / Antennes Région Sud Ouest -->
-    <div class="question-card">
-      <div class="question-label">
-        <span class="q-num">13.</span>
-        AGENCES / ANTENNES — RÉGION SUD OUEST
-        <span class="q-type-badge">(choix unique)</span>
+      <!-- Antennes de la région -->
+      <div id="antennes-wrap" style="display:none">
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:6px;margin-top:4px;">Antennes rattachées</div>
+        <select class="select-input" id="q10-antenne" aria-label="Antenne">
+          <option value="">— Sélectionnez une antenne (optionnel) —</option>
+        </select>
       </div>
-      <select class="select-input" id="q13" aria-label="Agences / Antennes Région Sud Ouest">
-        <option value="">Sélectionnez votre réponse</option>
-        <option>Bordeaux</option>
-        <option>Toulouse</option>
-        <option>Pau</option>
-        <option>Bayonne</option>
-        <option>Clermont-Ferrand</option>
-      </select>
-    </div>
-
-    <!-- Q14 — Agences / Antennes Région IDF -->
-    <div class="question-card">
-      <div class="question-label">
-        <span class="q-num">14.</span>
-        AGENCES / ANTENNES — RÉGION IDF
-        <span class="q-type-badge">(choix unique)</span>
-      </div>
-      <select class="select-input" id="q14" aria-label="Agences / Antennes Région IDF">
-        <option value="">Sélectionnez votre réponse</option>
-        <option>Paris Nord</option>
-        <option>Paris Sud</option>
-        <option>Paris Est</option>
-        <option>Paris Ouest</option>
-        <option>Île-de-France Centre</option>
-      </select>
     </div>
 
     <!-- ════════════════════════════════════════════════ -->
@@ -647,7 +587,7 @@
     <!-- ════════════════════════════════════════════════ -->
     <!--  SECTION 3 — ACTIONS PRISES                      -->
     <!-- ════════════════════════════════════════════════ -->
-    <div class="section-header">
+    <div class="section-header" id="section-actions">
       <div class="section-num">Section 3</div>
       <h2>ACTIONS PRISES</h2>
     </div>
@@ -743,6 +683,141 @@
   const API_ENDPOINT = '/api/submit';
 
   // ══════════════════════════════════════════════════════
+  //  Données agences / antennes (depuis le JSON fourni)
+  // ══════════════════════════════════════════════════════
+  const SITES = {
+    "CE": {
+      "CE01":{"region":"NORD OUEST","label":"Rennes CE01"},
+      "CE02":{"region":"NORD OUEST","label":"Nantes CE02"},
+      "CE03":{"region":"IDF","label":"Orléans CE03"},
+      "CE04":{"region":"SUD OUEST","label":"Bordeaux CE04"},
+      "CE05":{"region":"SUD OUEST","label":"Toulouse CE05"},
+      "CE06":{"region":"SUD OUEST","label":"Montpellier CE06"},
+      "CE07":{"region":"SUD EST","label":"Corbas CE07"},
+      "CE08":{"region":"SUD EST","label":"Marseille CE08"},
+      "CE09":{"region":"SUD OUEST","label":"Clermont CE09"},
+      "CE10":{"region":"NORD EST","label":"Brebières CE10"},
+      "CE11":{"region":"SUD EST","label":"Nice CE11"},
+      "CE12":{"region":"NORD OUEST","label":"Caen CE12"},
+      "CE13":{"region":"NORD EST","label":"Nancy CE13"},
+      "CE14":{"region":"NORD EST","label":"Dijon CE14"},
+      "CE15":{"region":"IDF","label":"Tremblay CE15"},
+      "CE16":{"region":"IDF","label":"Lisses CE16"},
+      "CE17":{"region":"IDF","label":"Ferrières CE17"},
+      "CE18":{"region":"IDF","label":"Gennevilliers CE18"},
+      "CE19":{"region":"IDF","label":"Chartres CE19"},
+      "CE20":{"region":"NORD EST","label":"Reims CE20"},
+      "CE21":{"region":"NORD OUEST","label":"Niort CE21"},
+      "CE24":{"region":"NORD EST","label":"Strasbourg CE24"},
+      "CE26":{"region":"SUD EST","label":"Chambéry CE26"},
+      "CE27":{"region":"NORD OUEST","label":"Rouen CE27"},
+      "CE28":{"region":"SUD EST","label":"Quincieux CE28"},
+      "CE30":{"region":"SUD OUEST","label":"Brive CE30"}
+    },
+    "ANTENNE": {
+      "AT2901":{"region":"NORD OUEST","label":"Rennes AT2901","code_ce":"CE01"},
+      "AT2201":{"region":"NORD OUEST","label":"Rennes AT2201","code_ce":"CE01"},
+      "AT5602":{"region":"NORD OUEST","label":"Nantes AT5602","code_ce":"CE02"},
+      "AT5601":{"region":"NORD OUEST","label":"Nantes AT5601","code_ce":"CE02"},
+      "AT8901":{"region":"IDF","label":"Orléans AT8901","code_ce":"CE03"},
+      "AT1501":{"region":"IDF","label":"Orléans AT1501","code_ce":"CE03"},
+      "AT3601":{"region":"IDF","label":"Orléans AT3601","code_ce":"CE03"},
+      "AT2601":{"region":"SUD EST","label":"Corbas AT2601","code_ce":"CE07"},
+      "AT8401":{"region":"SUD EST","label":"Marseille AT8401","code_ce":"CE08"},
+      "AT8301":{"region":"SUD EST","label":"Marseille AT8301","code_ce":"CE08"},
+      "AT0301":{"region":"SUD OUEST","label":"Clermont AT0301","code_ce":"CE09"},
+      "AT8001":{"region":"NORD EST","label":"Brebières AT8001","code_ce":"CE10"},
+      "AT8302":{"region":"SUD EST","label":"Nice AT8302","code_ce":"CE11"},
+      "AT6101":{"region":"NORD OUEST","label":"Caen AT6101","code_ce":"CE12"},
+      "AT5701":{"region":"NORD EST","label":"Nancy AT5701","code_ce":"CE13"},
+      "AT6002":{"region":"IDF","label":"Tremblay AT6002","code_ce":"CE15"},
+      "AT6001":{"region":"IDF","label":"Tremblay AT6001","code_ce":"CE15"},
+      "AT7801":{"region":"IDF","label":"Gennevilliers AT7801","code_ce":"CE18"},
+      "AT8601":{"region":"NORD OUEST","label":"Niort AT8601","code_ce":"CE21"},
+      "AT6801":{"region":"NORD EST","label":"Strasbourg AT6801","code_ce":"CE24"},
+      "AT7401":{"region":"SUD EST","label":"Chambéry AT7401","code_ce":"CE26"},
+      "AT4202":{"region":"SUD EST","label":"Quincieux AT4202","code_ce":"CE28"},
+      "AT4201":{"region":"SUD EST","label":"Quincieux AT4201","code_ce":"CE28"},
+      "AT1201":{"region":"SUD OUEST","label":"Brive AT1201","code_ce":"CE30"},
+      "AT4601":{"region":"SUD OUEST","label":"Brive AT4601","code_ce":"CE30"},
+      "AT2490":{"region":"SUD OUEST","label":"Brive AT2490","code_ce":"CE30"}
+    }
+  };
+
+  // ── Logique : mise à jour des listes selon la région ──
+  function populateAgences(region) {
+    const ceSelect      = document.getElementById('q10-ce');
+    const antenneSelect = document.getElementById('q10-antenne');
+    const antennесWrap  = document.getElementById('antennes-wrap');
+    const card          = document.getElementById('agences-card');
+    const regionLabel   = document.getElementById('agences-region-label');
+
+    // Réinitialiser
+    ceSelect.innerHTML      = '<option value="">— Sélectionnez une agence —</option>';
+    antenneSelect.innerHTML = '<option value="">— Sélectionnez une antenne (optionnel) —</option>';
+    antennесWrap.style.display = 'none';
+
+    if (!region) { card.style.display = 'none'; return; }
+
+    // Afficher la carte
+    card.style.display = 'block';
+    regionLabel.textContent = 'Région ' + region;
+
+    // Remplir les CE filtrés par région
+    const ces = Object.entries(SITES.CE)
+      .filter(([, v]) => v.region === region)
+      .sort(([a], [b]) => a.localeCompare(b));
+
+    ces.forEach(([code, data]) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = data.label;
+      ceSelect.appendChild(opt);
+    });
+
+    // Quand on choisit un CE, filtrer les antennes rattachées
+    ceSelect.onchange = () => {
+      const selectedCE = ceSelect.value;
+      antenneSelect.innerHTML = '<option value="">— Sélectionnez une antenne (optionnel) —</option>';
+
+      if (!selectedCE) { antennесWrap.style.display = 'none'; return; }
+
+      const antennes = Object.entries(SITES.ANTENNE)
+        .filter(([, v]) => v.code_ce === selectedCE)
+        .sort(([a], [b]) => a.localeCompare(b));
+
+      if (antennes.length > 0) {
+        antennесWrap.style.display = 'block';
+        antennes.forEach(([code, data]) => {
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = data.label;
+          antenneSelect.appendChild(opt);
+        });
+      } else {
+        antennесWrap.style.display = 'none';
+      }
+    };
+  }
+
+  // Écouter le changement de région
+  document.getElementById('region-group').addEventListener('change', e => {
+    if (e.target.name === 'q9') populateAgences(e.target.value);
+  });
+
+  // ── Scroll vers Section 3 quand anomalie = "Non" ──────
+  document.addEventListener('change', e => {
+    if (e.target.name === 'q15' && e.target.value === 'Non') {
+      const section3 = document.getElementById('section-actions');
+      if (section3) {
+        setTimeout(() => {
+          section3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150); // léger délai pour que l'UI se mette à jour d'abord
+      }
+    }
+  });
+
+  // ══════════════════════════════════════════════════════
   //  Highlight des items sélectionnés (radio + checkbox)
   // ══════════════════════════════════════════════════════
   document.addEventListener('change', e => {
@@ -785,7 +860,11 @@
       immatriculation            : val('q7'),
       type_de_verification       : radio('q8'),
       region                     : radio('q9'),
-      agences_antennes           : val('q10') || val('q11') || val('q12') || val('q13') || val('q14'),
+      agences_antennes           : (() => {
+        const antenne = document.getElementById('q10-antenne')?.value?.trim();
+        const ce      = document.getElementById('q10-ce')?.value?.trim();
+        return antenne || ce || null;
+      })(),
 
       // Section 2 — Anomalies
       anomalie                   : radio('q15'),
@@ -803,6 +882,9 @@
 
       // Section 5 — Fin
       actions_commentaires_divers: val('q23'),
+
+      // Toujours true pour ce formulaire sûreté
+      is_surete                  : true,
     };
   }
 
@@ -817,7 +899,6 @@
       appartenance_du_conducteur  : 'Appartenance du conducteur (Q4)',
       tournee                     : 'Numéro de tournée (Q5)',
       pda                         : 'Lettre de PDA (Q6)',
-      immatriculation             : 'Immatriculation (Q7)',
       type_de_verification        : 'Type de vérification (Q8)',
       region                      : 'Région (Q9)',
       anomalie                    : 'Anomalie (Q15)',

@@ -2,8 +2,9 @@
 // Sert les fichiers statiques (public/) et la route API (/api/submit)
 // Compatible Render (Web Service Node)
 
-import express from 'express';
-import path    from 'path';
+import express          from 'express';
+import path             from 'path';
+import { randomUUID }   from 'crypto';   // UUID v4 natif Node ≥ 14.17
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -40,6 +41,7 @@ const TABLE_NAME           = process.env.TABLE_NAME ?? 'db_verifications_chargem
 
 // Colonnes autorisées (whitelist)
 const ALLOWED_FIELDS = new Set([
+  'id',
   'heure_de_debut', 'heure_de_fin', 'date',
   'nom_verificateur', 'nom_de_la_personne_en_charge',
   'lieu_de_la_verification', 'appartenance_du_conducteur',
@@ -49,6 +51,7 @@ const ALLOWED_FIELDS = new Set([
   'anomalie_de_vehicule', 'commentaires_vehicule',
   'chauffeur_sorti_effectifs', 'sanction_rh',
   'anomalie_suivi_de_tournee', 'actions_commentaires_divers',
+  'is_surete',
 ]);
 
 app.post('/api/submit', async (req, res) => {
@@ -68,6 +71,9 @@ app.post('/api/submit', async (req, res) => {
     Object.entries(body).filter(([key]) => ALLOWED_FIELDS.has(key))
   );
 
+  // ── Injecter un UUID unique côté serveur (évite les doublons) ──
+  payload.id = randomUUID();
+
   // Champs obligatoires
   const required = ['date', 'type_de_verification', 'region', 'anomalie'];
   const missing  = required.filter(f => !payload[f]);
@@ -83,6 +89,7 @@ app.post('/api/submit', async (req, res) => {
         'Content-Type' : 'application/json',
         'apikey'       : SUPABASE_SERVICE_KEY,
         'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        // return=representation renvoie la ligne insérée (avec l'id généré)
         'Prefer'       : 'return=minimal',
       },
       body: JSON.stringify(payload),
@@ -94,7 +101,7 @@ app.post('/api/submit', async (req, res) => {
       return res.status(502).json({ error: 'Erreur insertion en base.', detail });
     }
 
-    return res.status(201).json({ success: true });
+    return res.status(201).json({ success: true, id: payload.id });
 
   } catch (err) {
     console.error('Fetch Supabase failed:', err);

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Formulaire de vérification de concordance de chargement — Service Sûreté",
   "private": true,
-  "type": "module",
   "engines": {
     "node": ">=18"
   },
@@ -15,5 +14,6 @@
   "dependencies": {
     "express": "^4.19.2"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }
